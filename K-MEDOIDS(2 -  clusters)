@@ -60,3 +60,147 @@ output:
 Enter no of points:2
 enter the values2 6 3 8
 Final clusters: (2, 6) ; (3 ,8)
+
+
+
+
+
+
+
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
+#define min(a,b) a>b?b:a
+float arr[100][2]={{2,6},{3,4},{3,8},{4,7},{6,2},{6,4},{7,3},{7,4},{8,5},{7,6}};
+int cluster[10],ind=0;
+float manhattan(float x1,float y1,float x2,float y2)
+{
+return abs(x1-x2)+abs(y1-y2);
+}
+float cost(int m1,int m2,float curr_min)
+{
+float mid1[2]={arr[m1][0],arr[m1][1]};
+float mid2[2]={arr[m2][0],arr[m2][1]};
+int d1=0,d2=0;
+int c1[10],c2[10],p1=0,p2=0;
+int dist1[10],dist2[10];
+for(int i=0;i<10;i++){
+d1=manhattan(mid1[0],mid1[1],arr[i][0],arr[i][1]);
+d2=manhattan(mid2[0],mid2[1],arr[i][0],arr[i][1]);
+if(d1>d2) 
+{
+c2[p2]=i;
+dist2[p2]=d2;
+p2++;
+}
+else
+{
+c1[p1]=i;
+dist1[p1]=d1;
+p1++;
+}
+}
+printf("\nfirst cluster\n");
+for(int i=0;i<p1;i++) printf("%d  ",c1[i]);
+printf("\nSecond cluster:\n");
+for(int i=0;i<p2;i++) printf("%d ",c2[i]);
+float cost=0;
+for(int i=0;i<p1;i++) cost+=dist1[i];
+for(int i=0;i<p2;i++) cost+=dist2[i];
+if (curr_min>cost) cluster_update(c1,c2,p1,p2);
+return cost;
+}
+void cluster_update(int *c1,int *c2,int p1,int p2)
+{
+for(int i=0;i<p1;i++) cluster[c1[i]]=1;
+for(int i=0;i<p2;i++) cluster[c2[i]]=2;
+}
+int main()
+{
+int c_mid=1;
+float min_cost=cost(1,7,99999);
+printf("\nThe cost in this cluster:%f",min_cost);
+printf("\n");
+for(int i=0;i<10;i++)
+{
+if(i==c_mid) continue;
+float curr_cost=cost(c_mid,i,min_cost);
+printf("\nThe cost in this clusteris:%f\n",curr_cost);
+min_cost=min(min_cost,curr_cost);
+}
+printf("\nThe Minimum Cost is:%f\n",min_cost);
+printf("\nThe Cluster is:\n");
+for(int i=0;i<10;i++) printf("%d ",cluster[i]);
+printf("\n");
+}
+
+
+
+output:
+
+first cluster
+0  1  2  3  
+Second cluster:
+4 5 6 7 8 9 
+The cost in this cluster:20.000000
+
+first cluster
+1  4  5  6  7  8  
+Second cluster:
+0 2 3 9 
+The cost in this clusteris:34.000000
+
+first cluster
+0  1  4  5  6  7  8  9  
+Second cluster:
+2 3 
+The cost in this clusteris:34.000000
+
+first cluster
+0  1  4  5  6  7  8  
+Second cluster:
+2 3 9 
+The cost in this clusteris:32.000000
+
+first cluster
+0  1  2  3  
+Second cluster:
+4 5 6 7 8 9 
+The cost in this clusteris:28.000000
+
+first cluster
+0  1  2  3  
+Second cluster:
+4 5 6 7 8 9 
+The cost in this clusteris:22.000000
+
+first cluster
+0  1  2  3  
+Second cluster:
+4 5 6 7 8 9 
+The cost in this clusteris:22.000000
+
+first cluster
+0  1  2  3  
+Second cluster:
+4 5 6 7 8 9 
+The cost in this clusteris:20.000000
+
+first cluster
+0  1  2  3  4  5  
+Second cluster:
+6 7 8 9 
+The cost in this clusteris:26.000000
+
+first cluster
+0  1  2  3  4  5  
+Second cluster:
+6 7 8 9 
+The cost in this clusteris:26.000000
+
+The Minimum Cost is:20.000000
+
+The Cluster is:
+1 1 1 1 2 2 2 2 2 2 
+
