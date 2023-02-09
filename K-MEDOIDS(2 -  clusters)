@@ -1,0 +1,62 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<limits.h>
+#include<math.h>
+
+struct point{
+    int a,b;
+};
+
+struct res{
+    struct point a;
+    struct point b;
+};
+
+int distance(struct point p1,struct point p2){
+    return (abs(p1.a-p2.a)+abs(p1.b-p2.b));
+}
+
+int main(){
+  int n=5;
+  struct res sol;
+  printf("Enter no of points:");
+  scanf("%d",&n);
+  struct point p[n];
+  for (int i=0;i<n;i++){
+      printf("enter the values");
+      scanf("%d %d",&p[i].a,&p[i].b);
+  }
+//  for(int i=0;i<n;i++){
+//      printf("(%d , %d)\n",p[i].a,p[i].b);
+//  }
+ 
+ 
+  struct point result;
+  int min=INT_MAX;
+  for(int i=0;i<n;i++){
+      struct point p1=p[i];
+      for(int j=0;j<n;j++){
+          int mini=0;
+          struct point p2=p[j];
+          for (int k=0;k<n;k++){
+              int re1=distance(p1,p[k]);
+              int re2=distance(p2,p[k]);
+              mini=mini+(re1>re2?re2:re1);
+          }
+          if (mini<min){
+              min=mini;
+              sol.a=p1;sol.b=p2;
+              result.a=i;result.b=j;
+          }
+      }
+  }
+ 
+  printf("Final clusters: (%d, %d) ; (%d ,%d)",sol.a.a,sol.a.b,sol.b.a,sol.b.b);
+ 
+}
+
+output:
+
+Enter no of points:2
+enter the values2 6 3 8
+Final clusters: (2, 6) ; (3 ,8)
