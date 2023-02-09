@@ -1,0 +1,79 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
+int comp(int m,int a1,int a2){
+        // printf("%d\n",abs(a1-m)>abs(a2-m)?a2:a1);
+        return abs(a1-m)>abs(a2-m)?a2:a1;
+}
+
+
+void disp(int a[]){
+        for(int i=0;i<10;i++){
+                printf("%d ",a[i]);
+        }
+        printf("\n");
+}
+
+
+
+int main(){
+
+        int m[]={1,2,3,4,10,11,12,20,25,30,51};
+        int m1=m[2],m2=m[5];
+        int n=11;//length
+        int t1[n],t2[n];
+        int r1=m1,r2=m2;
+        int k1=0,k2=0;
+        while(m1!=m2){
+                k1=0;k2=0;
+                for (int i=0;i<n;i++)
+                {
+                        int re=comp(m[i],m1,m2);
+                        if (re==m1){
+                                // printf("yes1");
+                                t1[k1++]=m[i];
+                        }
+                        else if(re==m2){
+                                // printf("yes2");
+                                t2[k2++]=m[i];
+                        }
+                }
+               
+               
+                // disp(t1);disp(t2);
+               
+                int temp1=0,temp2=0;
+                for (int i=0;i<k1;i++){
+                        temp1=temp1+t1[i];
+                        // t1[i]=0;
+                }
+                for (int i=0;i<k2;i++){
+                        temp2=temp2+t2[i];
+                        // t2[i]=0;
+                }
+               
+                m1=round(temp1/k1);m2=round(temp2/k2);
+                if(r1!=m1 || r2!=m2){
+                    r1=m1;r2=m2;
+                }
+                else{
+                    break;
+                }
+                // printf("%d , %d\n",m1,m2);
+        }
+        for(int i=0;i<k1;i++){
+                printf("%d ",t1[i]);
+        }
+        printf("\n");
+        for(int i=0;i<k2;i++){
+                printf("%d ",t2[i]);
+        }
+       
+        return 0;
+}
+
+
+output:
+
+1 2 3 4 10 11 12 
+20 25 30 51 
